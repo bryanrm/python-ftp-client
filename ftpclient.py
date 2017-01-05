@@ -44,15 +44,15 @@ def main(argv):
         try:
             ftp = ftplib.FTP(argv[1])
             session_loop(ftp)
-        except TimeoutError:
-            print("Error: Connection timed out.")
+        except ftplib.all_errors as e:
+            print(str(e).split(None, 1)[1])
             exit(1)
     elif len(argv) == 4:
         try:
             ftp = ftplib.FTP(argv[1], argv[2], argv[3])
             session_loop(ftp)
-        except TimeoutError:
-            print("Error: Connection timed out.")
+        except ftplib.all_errors as e:
+            print(str(e).split(None, 1)[1])
             exit(1)
     else:
         print("Error: Invalid number of args.")
