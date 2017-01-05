@@ -12,7 +12,7 @@ def session_loop(ftp):
         exit(1)
     while True:
         text = input()
-        if text.lower() == "dir":
+        if text.lower().startswith("dir"):
             ftp.dir()
             print("Directory completely listed.")
         elif text.lower().startswith("cd"):
@@ -36,7 +36,7 @@ def session_loop(ftp):
                 print("Error: File name not specified.")
             except IOError:
                 print("Error: Unable to write file.")
-        elif text.lower().startwith("ul"):
+        elif text.lower().startswith("ul"):
             try:
                 path = text.split(None, 1)[1]
                 name = os.path.basename(path)
@@ -48,10 +48,18 @@ def session_loop(ftp):
                 print("Error: File name not specified.")
             except IOError:
                 print("Error: Unable to open file.")
+        elif text.lower().startswith("del"):
+            try:
+                r = ftp.delete(text.split(None, 1)[1])
+                print(str(r).split(None, 1)[1])
+            except ftplib.all_errors as e:
+                print("Error: "+str(e).split(None, 1)[1])
+            except IndexError:
+                print("Error: File name not specified.")
         elif text == "exit" or text == "quit":
             break
         else:
-            print("Error: Command not recognized.")
+            print("Error: Command not recognized.\nEnter 'exit' or 'quit' to exit program.")
     ftp.quit()
 
 
