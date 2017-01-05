@@ -18,7 +18,7 @@ def session_loop(ftp):
             print("Directory completely listed.")
         elif text.lower().startswith("cd"):
             try:
-                r = ftp.cwd(text.split()[1])
+                r = ftp.cwd(text.split(None, 1)[1])
                 print(str(r).split(None, 1)[1])
                 ftp.dir()
                 print("Directory completely listed.")
@@ -28,7 +28,7 @@ def session_loop(ftp):
                 print("Error: Directory name not specified.")
         elif text.lower().startswith("dl"):
             try:
-                name = text.split()[1]
+                name = text.split(None, 1)[1]
                 r = ftp.retrbinary("RETR "+name, open(name, "wb").write)
                 print(str(r).split(None, 1)[1])
             except ftplib.all_errors as e:
