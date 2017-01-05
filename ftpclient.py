@@ -16,10 +16,10 @@ def session_loop(ftp):
             ftp.dir()
         elif text.lower().startswith("cd"):
             try:
-                ftp.cwd(text.split(" ")[1])
+                ftp.cwd(text.split()[1])
                 ftp.dir()
-            except ftplib.all_errors:
-                print("Unable to access selected directory.")
+            except ftplib.error_perm as e:
+                print("Error: "+str(e).split(None, 1)[1])
         elif text == "--exit":
             break
     ftp.quit()
