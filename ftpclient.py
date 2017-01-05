@@ -8,7 +8,7 @@ def session_loop(ftp):
     try:
         ftp.dir()
         print("Directory completely listed.")
-    except ftplib.error_perm as e:
+    except ftplib.all_errors as e:
         print("Error: "+str(e).split(None, 1)[1])
         exit(1)
     while True:
@@ -22,17 +22,25 @@ def session_loop(ftp):
                 print(str(r).split(None, 1)[1])
                 ftp.dir()
                 print("Directory completely listed.")
-            except ftplib.error_perm as e:
+            except ftplib.all_errors as e:
                 print("Error: "+str(e).split(None, 1)[1])
+            except IndexError:
+                print("Error: Directory name not specified.")
         elif text.lower().startswith("dl"):
-            name = text.split()[1]
             try:
+                name = text.split()[1]
                 r = ftp.retrbinary("RETR "+name, open(name, "wb").write)
                 print(str(r).split(None, 1)[1])
             except ftplib.all_errors as e:
                 print("Error: "+str(e).split(None, 1)[1])
+            except IndexError:
+                print("Error: File name not specified.")
+            except IOError:
+                print("Error: Unable to write to file.")
         elif text == "exit" or text == "quit":
             break
+        else:
+            print("Error: Command not recognized.")
     ftp.quit()
 
 
