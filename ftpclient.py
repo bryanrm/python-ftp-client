@@ -1,6 +1,5 @@
 # Created by Bryan R Martinez on 1/4/2017
-import ftplib
-import sys
+import ftplib, sys, os
 
 
 def session_loop(ftp):
@@ -36,7 +35,19 @@ def session_loop(ftp):
             except IndexError:
                 print("Error: File name not specified.")
             except IOError:
-                print("Error: Unable to write to file.")
+                print("Error: Unable to write file.")
+        elif text.lower().startwith("ul"):
+            try:
+                path = text.split(None, 1)[1]
+                name = os.path.basename(path)
+                r = ftp.storbinary("STOR "+name, open(path, "rb"))
+                print(str(r).split(None, 1)[1])
+            except ftplib.all_errors as e:
+                print("Error: " + str(e).split(None, 1)[1])
+            except IndexError:
+                print("Error: File name not specified.")
+            except IOError:
+                print("Error: Unable to open file.")
         elif text == "exit" or text == "quit":
             break
         else:
