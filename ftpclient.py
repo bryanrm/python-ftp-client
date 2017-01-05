@@ -7,6 +7,7 @@ def session_loop(ftp):
     print(str(ftp.getwelcome()).split(None, 1)[1])
     try:
         ftp.dir()
+        print("Directory completely listed.")
     except ftplib.error_perm as e:
         print("Error: "+str(e).split(None, 1)[1])
         exit(1)
@@ -14,13 +15,23 @@ def session_loop(ftp):
         text = input()
         if text.lower() == "dir":
             ftp.dir()
+            print("Directory completely listed.")
         elif text.lower().startswith("cd"):
             try:
-                ftp.cwd(text.split()[1])
+                r = ftp.cwd(text.split()[1])
+                print(str(r).split(None, 1)[1])
                 ftp.dir()
+                print("Directory completely listed.")
             except ftplib.error_perm as e:
                 print("Error: "+str(e).split(None, 1)[1])
-        elif text == "--exit":
+        elif text.lower().startswith("dl"):
+            name = text.split()[1]
+            try:
+                r = ftp.retrbinary("RETR "+name, open(name, "wb").write)
+                print(str(r).split(None, 1)[1])
+            except ftplib.all_errors as e:
+                print("Error: "+str(e).split(None, 1)[1])
+        elif text == "exit" or text == "quit":
             break
     ftp.quit()
 
