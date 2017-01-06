@@ -48,6 +48,16 @@ def session_loop(ftp):
                 print("Error: File name not specified.")
             except IOError:
                 print("Error: Unable to open file.")
+        elif text.lower().startswith("rn"):
+            try:
+                names = text.split(None, 1)
+                names = names[1].split("  ")
+                r = ftp.rename(names[0], names[1])
+                print(str(r).split(None, 1)[1])
+            except ftplib.all_errors as e:
+                print("Error: " + str(e).split(None, 1)[1])
+            except IndexError:
+                print("Error: File names not correctly specified.")
         elif text.lower().startswith("del"):
             try:
                 r = ftp.delete(text.split(None, 1)[1])
