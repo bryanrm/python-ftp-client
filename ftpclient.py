@@ -2,6 +2,7 @@
 import ftplib, sys, os
 
 
+# primary loop, runs until exit or quit entered by user
 def session_loop(ftp):
     print(str(ftp.getwelcome()).split(None, 1)[1])
     try:
@@ -69,10 +70,12 @@ def session_loop(ftp):
         elif text == "exit" or text == "quit":
             break
         else:
-            print("Error: Command not recognized.\nEnter 'exit' or 'quit' to exit program.")
+            print("Error: Command not recognized.")
+            print("Enter 'exit' or 'quit' to exit the program or 'help' for help.")
     ftp.quit()
 
 
+# validates program args
 def main(argv):
     if len(argv) == 1 or len(argv) == 3:
         print("Error: Invalid number of args entered.")
@@ -96,5 +99,6 @@ def main(argv):
         exit(1)
 
 
+# runs script if called directly
 if __name__ == "__main__":
     main(sys.argv)
