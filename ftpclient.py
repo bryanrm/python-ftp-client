@@ -67,6 +67,16 @@ def session_loop(ftp):
                 print("Error: "+str(e).split(None, 1)[1])
             except IndexError:
                 print("Error: File name not specified.")
+        elif text == "help":
+            print("""
+            'exit' or 'quit' - exits program
+            'dir' - list directory contents
+            'cd [dir_name]' - moves to specified directory (.. returns to previous directory)
+            'dl [file_name]' - downloads specified file to default program directory
+            'ul [file_name' - uploads specified file to current server directory
+            'rn [name]  [new_name]' - renames file on server to new_name (note: double space between names)
+            'del [file_name]' - deletes specified file on server
+            """)
         elif text == "exit" or text == "quit":
             break
         else:
