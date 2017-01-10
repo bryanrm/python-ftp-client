@@ -2,10 +2,20 @@
 import textwrap, ftplib, sys, os
 
 
+def get_notice():
+    return textwrap.dedent('''\
+    FTP Client  Copyright (C) 2017  Bryan R. Martinez (github.com/bryanrm)
+    This program comes with ABSOLUTELY NO WARRANTY; for details type 'notice'.
+    This is free software, and you are welcome to redistribute it
+    under certain conditions.
+    ''')
+
+
 # primary loop, runs until exit or quit entered by user
 def session_loop(ftp):
-    print(str(ftp.getwelcome()).split(None, 1)[1])
     try:
+        print(get_notice())
+        print(str(ftp.getwelcome()).split(None, 1)[1])
         ftp.dir()
         print("Directory completely listed.")
     except ftplib.all_errors as e:
