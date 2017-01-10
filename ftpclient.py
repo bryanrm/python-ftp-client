@@ -2,12 +2,11 @@
 import textwrap, ftplib, sys, os
 
 
+# copyright notice
 def get_notice():
     return textwrap.dedent('''\
     FTP Client  Copyright (C) 2017  Bryan R. Martinez (github.com/bryanrm)
-    This program comes with ABSOLUTELY NO WARRANTY; for details type 'notice'.
-    This is free software, and you are welcome to redistribute it
-    under certain conditions.
+    See the GNU General Public License for more details.
     ''')
 
 
